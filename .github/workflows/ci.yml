@@ -16,10 +16,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Neovim
-        uses: oniatus/neovim-action@v2.3.0
+      - uses: rhysd/action-setup-vim@v1
         with:
-          neovim-version: stable
+          neovim: true         
 
       - name: Install dependencies
         run: |
