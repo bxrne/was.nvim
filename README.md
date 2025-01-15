@@ -56,4 +56,10 @@ The plugin automatically detects your workspace based on:
 
 Intentions are stored persistently in `~/.local/share/nvim/was/intentions.json`.
 
+## Testing
+
+```bash
+nvim --headless -c "PlenaryBustedDirectory tests/ { minimal_init = './tests/minimal_init.lua' }"
+```
+
 
