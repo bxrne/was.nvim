@@ -1,5 +1,7 @@
 # was.nvim
 
+[![CI](https://github.com/bxrne/was.nvim/actions/workflows/ci.yml/badge.svg)](https://github.com/bxrne/was.nvim/actions/workflows/ci.yml)
+
 Neovim plugin to solve "What was I doing here" when moving between dirs
 
 ## Features
