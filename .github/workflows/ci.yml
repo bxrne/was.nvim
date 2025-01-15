@@ -24,8 +24,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y luarocks
-          luarocks install --server=https://luarocks.org/dev luaunit
-          luarocks install --server=https://luarocks.org/dev plenary.nvim
+          sudo luarocks install --server=https://luarocks.org/dev luaunit
+          sudo luarocks install --server=https://luarocks.org/dev plenary.nvim
 
       - name: Run tests
         run: |
