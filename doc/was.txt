@@ -17,16 +17,21 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   "bxrne/was.nvim",
   config = true, -- calls setup() automatically
-  event = "VeryLazy",
+  dependencies = {
+    "nvim-lua/plenary.nvim", -- for path handling
+  },
 }
 
 Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 >lua
 use {
-  'bxrne/was.nvim',
+  "bxrne/was.nvim",
+  requires = {
+    "nvim-lua/plenary.nvim", -- for path handling
+  },
   config = function()
     require('was').setup()
-  end
+  end,
 }
 
 COMMANDS:

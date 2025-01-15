@@ -15,7 +15,6 @@ Neovim plugin to solve "What was I doing here" when moving between dirs
 
 - Neovim >= 0.8.0
 - [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
-- [rcarriga/nvim-notify](https://github.com/rcarriga/nvim-notify) 
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
@@ -23,7 +22,6 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   "bxrne/was.nvim",
   dependencies = {
-	"rcarriga/nvim-notify", -- for notifications
     "nvim-lua/plenary.nvim", -- for path handling
   },
   config = true, -- calls require('was').setup()
@@ -33,10 +31,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 
 ```lua
-use {
+yuse {
   "bxrne/was.nvim",
   requires = {
-    "rcarriga/nvim-notify", -- for notifications
     "nvim-lua/plenary.nvim", -- for path handling
   },
   config = function()
