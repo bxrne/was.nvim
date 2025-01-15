@@ -8,9 +8,12 @@ Neovim plugin to solve "What was I doing here" when moving between dirs
 - Persistent storage between Neovim sessions
 - Minimal and fast
 - Written in pure Lua
-- Fully tested
 
 ## Installation
+
+### Prerequisites
+
+- Neovim >= 0.8.0
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
@@ -51,27 +54,8 @@ The plugin automatically detects your workspace based on:
 
 Intentions are stored persistently in `~/.local/share/nvim/was/intentions.json`.
 
-## Development
-
-### Prerequisites
-
-- Neovim >= 0.8.0
-- [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) (for running tests)
-
-### Running Tests
-
-Install plenary.nvim and run:
-
-```vim
-:PlenaryBustedFile tests/was_spec.lua
-```
-
-Or using the command line:
+## Testing
 
 ```bash
-nvim --headless -c "PlenaryBustedFile tests/was_spec.lua" +q
+nvim --headless -c "PlenaryBustedDirectory tests/ { minimal_init = './tests/minimal_init.lua' }"
 ```
-
-### CI
-
-Tests are automatically run on push and pull requests using GitHub Actions.
