@@ -1,7 +1,5 @@
 # was.nvim
 
-[![CI](https://github.com/bxrne/was.nvim/actions/workflows/ci.yml/badge.svg)](https://github.com/bxrne/was.nvim/actions/workflows/ci.yml)
-
 Neovim plugin to solve "What was I doing here" when moving between dirs
 
 ## Features
@@ -61,5 +59,3 @@ Intentions are stored persistently in `~/.local/share/nvim/was/intentions.json`.
 ```bash
 nvim --headless -c "PlenaryBustedDirectory tests/ { minimal_init = './tests/minimal_init.lua' }"
 ```
-
-
