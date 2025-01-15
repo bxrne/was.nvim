@@ -29,4 +29,4 @@ jobs:
 
       - name: Run tests
         run: |
-          nvim --headless -c "PlenaryBustedDirectory tests/ {minimal_init = './tests/minimal_init.lua'}"
+         sudo nvim --headless -c "PlenaryBustedDirectory tests/ {minimal_init = './tests/minimal_init.lua'}"
