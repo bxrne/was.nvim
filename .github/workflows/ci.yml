@@ -16,9 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - uses: rhysd/action-setup-vim@v1
-        with:
-          neovim: true         
+      - name: Install Neovim
+        run : |
+          sudo apt-get update
+          sudo apt-get install -y neovim@nightly
 
       - name: Install dependencies
         run: |
@@ -29,4 +30,4 @@ jobs:
 
       - name: Run tests
         run: |
-         sudo nvim --headless -c "PlenaryBustedDirectory tests/ {minimal_init = './tests/minimal_init.lua'}"
+         nvim --headless -c "PlenaryBustedDirectory tests/ {minimal_init = './tests/minimal_init.lua'}"
