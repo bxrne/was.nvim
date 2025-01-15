@@ -1,46 +1,45 @@
-================================================================================
-                                                                   *was.nvim*
+*was.nvim*            *bxrne/was.nvim*
 
-was.nvim is a Neovim plugin designed to help you remember what you were doing when
-moving between directories. It stores intentions per workspace, providing persistent
-storage between Neovim sessions. The plugin is minimal, fast, written in pure Lua.
-                                                                  *was.features*
-Features:
-- Store intentions per workspace (Git root or current directory)
-- Persistent storage between Neovim sessions
-- Minimal and fast
-- Written in pure Lua
+AUTHOR: bxrne
+VERSION: 1.0
 
-                                                                  *was.usage*
-Usage:
-To store your current intention, use the following command:
-:Was Implementing user authentication system
+was.nvim - Neovim plugin to solve "What was I doing here?" when moving between directories.
 
-To view your last stored intention, use:
-:Was
+FEATURES:
+  - Store intentions per workspace (Git root or current directory).
+  - Persistent storage across Neovim sessions.
+  - Written in pure Lua for speed and simplicity.
 
-The plugin automatically detects your workspace based on:
-- Git root directory (if in a Git repository)
-- Current working directory (if not in a Git repository)
+INSTALLATION:
 
-Intentions are stored persistently in ~/.local/share/nvim/was/intentions.json.
+Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+>lua
+{
+  "bxrne/was.nvim",
+  config = true, -- calls setup() automatically
+  event = "VeryLazy",
+}
 
-                                                                  *was.setup*
-Configuration:
-was.nvim provides a simple setup function to initialize the plugin. You can call this
-function in your configuration file:
+Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
+>lua
+use {
+  'bxrne/was.nvim',
+  config = function()
+    require('was').setup()
+  end
+}
 
-lua << EOF
-require('was').setup()
-EOF
+COMMANDS:
+  :Was <text>    Set the intention for the current project. 
+                 E.g., :Was Implementing user authentication system
+  :Was           View the last stored intention for the current project.
 
-                                                                  *was.commands*
-Commands:
-:Was {intention}   Store the current intention
-:Was               View the last stored intention
+WORKFLOW:
+  - Checks for a Git root or defaults to the current directory.
+  - Intention data is stored persistently in:
+      `~/.local/share/nvim/was/intentions.json`.
 
-                                                                  *was.functions*
-Functions:
-was.setup()   Initialize the plugin with default settings
+LICENSE:
+This plugin is MIT licensed.
 
- vim:tw=78:ts=8:ft=help:norl:
+vim:tw=78:ts=8:ft=help:norl:
