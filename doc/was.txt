@@ -1,12 +1,12 @@
 *was.nvim*            *bxrne/was.nvim*
 
 AUTHOR: bxrne
-VERSION: 1.0
+VERSION: 1.0.3
 
 was.nvim - Neovim plugin to solve "What was I doing here?" when moving between directories.
 
 FEATURES:
-  - Store intentions per workspace (Git root or current directory).
+  - Store intentions per workspace (current directory).
   - Persistent storage across Neovim sessions.
   - Written in pure Lua for speed and simplicity.
 
@@ -34,13 +34,19 @@ use {
   end,
 }
 
+CONFIGURATION:
+  >lua
+  require('was').setup({
+    defer_time = 3000, -- milliseconds before the UI window closes
+  })
+
 COMMANDS:
   :Was <text>    Set the intention for the current project. 
                  E.g., :Was Implementing user authentication system
   :Was           View the last stored intention for the current project.
 
 WORKFLOW:
-  - Checks for a Git root or defaults to the current directory.
+  - Checks for the current directory.
   - Intention data is stored persistently in:
       `~/.local/share/nvim/was/intentions.json`.
 

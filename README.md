@@ -13,8 +13,6 @@ It's for someone who doesn't need a terminal multiplexer like [tmux](https://git
 - Minimal and fast
 - Written in pure Lua
 
-
-
 ## Installation
 
 ### Prerequisites
