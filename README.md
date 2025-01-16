@@ -46,7 +46,7 @@ use {
 }
 ```
 
-## Configuration
+## Configuration
 
 In your Lazy or Packer configuration, you can pass an optional `opts` table to `require('was').setup()`:
 ```lua
