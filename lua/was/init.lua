@@ -1,16 +1,10 @@
 local M = {}
 local uv = vim.loop
 
--- Function to get the project's root directory
-local function get_project_root()
-	local cwd = vim.fn.getcwd()
-	local git_dir = vim.fn.finddir(".git", cwd .. ";")
-	if git_dir ~= "" then -- Try git project root
-		return vim.fn.fnamemodify(git_dir, ":h")
-	else -- Or use working path
-		return cwd
-	end
-end
+-- Default Configuration
+local config = {
+	defer_time = 3000, -- default to 3 seconds
+}
 
 -- Function to get the storage file path
 local function get_storage_file()
@@ -66,7 +60,7 @@ local function save_intentions(intentions)
 	return true
 end
 
--- Human-readable time format
+-- Human-readable time format (good enough for this use case)
 local function time_diff(timestamp)
 	local diff = uv.now() / 1000 - timestamp
 	local days = math.floor(diff / (60 * 60 * 24))
@@ -84,7 +78,7 @@ local function time_diff(timestamp)
 end
 
 -- Function to display UI with messages
-function M.display_ui(message, level)
+function M.display_ui(message, level, footer_message)
 	local hl_group = level == "error" and "Error" or "Info"
 	local screen_width = vim.api.nvim_get_option("columns")
 	local screen_height = vim.api.nvim_get_option("lines")
@@ -106,25 +100,20 @@ function M.display_ui(message, level)
 		row = row,
 		style = "minimal",
 		border = "rounded",
+		title = "Was",
+		title_pos = "center",
+		footer = footer_message,
+		footer_pos = "right",
 	})
 
 	-- Set the buffer to readonly and disable modifications
 	vim.api.nvim_buf_set_option(buf, "modifiable", false)
 	vim.api.nvim_buf_set_option(buf, "readonly", true)
 
-	-- Key mapping for closing the window on 'q'
-	vim.api.nvim_buf_set_keymap(
-		buf,
-		"n",
-		"q",
-		':lua require("was").close_ui(' .. win .. ")\n",
-		{ noremap = true, silent = true }
-	)
-
-	-- Automatically close after 3 seconds
+	-- Automatically close after configured seconds
 	vim.defer_fn(function()
 		vim.api.nvim_win_close(win, true)
-	end, 3000)
+	end, config.defer_time)
 end
 
 -- Function to close the UI window manually (via 'q' key)
@@ -136,35 +125,38 @@ end
 
 -- Function to set or get the intention
 function M.handle(input)
-	local project_root = get_project_root()
+	local project_root = vim.fn.getcwd()
 	local intentions = load_intentions()
 
 	if input == "" then
 		if intentions[project_root] then
 			local timestamp = intentions[project_root].timestamp
 			local time_display = time_diff(timestamp)
-			M.display_ui("Intention: " .. intentions[project_root].message .. " (" .. time_display .. ")", "info")
+			local message = "You were " .. intentions[project_root].message
+
+			M.display_ui(message, "info", time_display)
 		else
-			M.display_ui("No intention set for this project.", "warn")
+			M.display_ui("No intention set for this project.", "warn", "Set one using :Was <intention>")
 		end
 	else
 		local intention = { message = input, timestamp = uv.now() / 1000 }
 		intentions[project_root] = intention
 		if save_intentions(intentions) then
-			M.display_ui("Intention saved: " .. input, "info")
+			M.display_ui("saved: " .. input, "info", "You can check it using :Was")
 		end
 	end
 end
 
 -- setup function to create the command
-function M.setup()
+function M.setup(user_config)
+	-- Merge user config with default config
+	config = vim.tbl_extend("force", config, user_config or {})
 	vim.api.nvim_create_user_command("Was", function(opts)
 		require("was").handle(opts.args)
 	end, { nargs = "?" })
 end
 
 -- Expose functions for testing
-M._get_project_root = get_project_root
 M._get_storage_file = get_storage_file
 M._load_intentions = load_intentions
 M._save_intentions = save_intentions
