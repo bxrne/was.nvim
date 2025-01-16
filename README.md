@@ -1,13 +1,19 @@
 # was.nvim
 
-Neovim plugin to solve "What was I doing here" when moving between dirs
+Neovim plugin to solve "What was I doing here" when moving between dirs.
+
+It's for someone who doesn't need a terminal multiplexer like [tmux](https://github.com/tmux/tmux/wiki) or [zellij](https://zellij.dev) but hops in and out of folders with multiple neovim instances and need to place a mental checkpoint in what they were doing or thinking.
+
+<img height="250" src="screenshot.png" alt="Screenshot of was.nvim">
 
 ## Features
 
-- Store intentions per workspace (Git root or current directory)
+- Store intentions per workspace (cwd)
 - Persistent storage between Neovim sessions
 - Minimal and fast
 - Written in pure Lua
+
+
 
 ## Installation
 
@@ -42,6 +48,22 @@ use {
 }
 ```
 
+## Configuration
+
+In your Lazy or Packer configuration, you can pass an optional `opts` table to `require('was').setup()`:
+```lua
+{
+  -- "bxrne/was.nvim",
+  -- dependencies = {
+  --   "nvim-lua/plenary.nvim", -- for path handling
+  -- },
+  -- config = true, -- calls require('was').setup()
+  opts = { -- optional config
+    defer_time = 3000, -- default time for window to live for (ms)
+  },
+}
+```
+
 ## Usage
 
 Store your current intention:
@@ -54,9 +76,7 @@ View your last stored intention:
 :Was
 ```
 
-The plugin automatically detects your workspace based on:
-1. Git root directory (if in a Git repository)
-2. Current working directory (if not in a Git repository)
+The plugin automatically detects your workspace based on cwd.
 
 Intentions are stored persistently in `~/.local/share/nvim/was/intentions.json`.
 

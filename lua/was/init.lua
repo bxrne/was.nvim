@@ -78,7 +78,7 @@ local function time_diff(timestamp)
 end
 
 -- Function to display UI with messages
-function M.display_ui(message, level)
+function M.display_ui(message, level, footer_message)
 	local hl_group = level == "error" and "Error" or "Info"
 	local screen_width = vim.api.nvim_get_option("columns")
 	local screen_height = vim.api.nvim_get_option("lines")
@@ -100,6 +100,10 @@ function M.display_ui(message, level)
 		row = row,
 		style = "minimal",
 		border = "rounded",
+		title = "Was",
+		title_pos = "center",
+		footer = footer_message,
+		footer_pos = "right",
 	})
 
 	-- Set the buffer to readonly and disable modifications
@@ -128,19 +132,17 @@ function M.handle(input)
 		if intentions[project_root] then
 			local timestamp = intentions[project_root].timestamp
 			local time_display = time_diff(timestamp)
-			-- M.display_ui("You were " .. intentions[project_root].message .. " (" .. time_display .. ")", "info")
-			-- Style the above text using highlight groups
-			local message = "You were " .. intentions[project_root].message .. " (" .. time_display .. ")"
+			local message = "You were " .. intentions[project_root].message
 
-			M.display_ui(message, "info")
+			M.display_ui(message, "info", time_display)
 		else
-			M.display_ui("No intention set for this project.", "warn")
+			M.display_ui("No intention set for this project.", "warn", "Set one using :Was <intention>")
 		end
 	else
 		local intention = { message = input, timestamp = uv.now() / 1000 }
 		intentions[project_root] = intention
 		if save_intentions(intentions) then
-			M.display_ui("Intention saved: " .. input, "info")
+			M.display_ui("saved: " .. input, "info", "You can check it using :Was")
 		end
 	end
 end
