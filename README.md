@@ -31,7 +31,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 
 ```lua
-yuse {
+use {
   "bxrne/was.nvim",
   requires = {
     "nvim-lua/plenary.nvim", -- for path handling
